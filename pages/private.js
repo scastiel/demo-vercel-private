@@ -12,10 +12,16 @@ export default function Private({ privateContent }) {
 
 export function getServerSideProps({ req, query }) {
   if (query.password === 'abc123') {
-    const privateContent = fs.readFileSync(
-      path.resolve('content/private.txt'),
-      'utf-8'
-    )
+    const dir = path.resolve('content')
+    const files = fs.readdirSync(dir)
+
+    let privateContent = ''
+    for (const file of files) {
+      privateContent += file + ':\n'
+      privateContent += fs.readFileSync(path.join(dir, file))
+      privateContent += '\n'
+    }
+
     return { props: { privateContent } }
   } else {
     return { redirect: { destination: '/login', permanent: false } }
