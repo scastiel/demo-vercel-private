@@ -13,7 +13,7 @@ export default function Private({ privateContent }) {
 export function getServerSideProps({ req, query }) {
   if (query.password === 'abc123') {
     const privateContent = fs.readFileSync(
-      path.resolve('public/private.txt'),
+      path.resolve('content/private.txt'),
       'utf-8'
     )
     return { props: { privateContent } }
